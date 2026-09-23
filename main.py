@@ -8,5 +8,13 @@ class Curso:
 
 c1 = Curso("Engenharia de Software", UFCA001, )
 
-        
+
 pass
+
+class Pessoa:
+    def __init__(self, aluno):
+        self.aluno = aluno
+        pass
+
+
+class Oferta: 
