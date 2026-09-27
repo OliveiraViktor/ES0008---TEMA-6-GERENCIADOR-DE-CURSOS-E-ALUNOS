@@ -31,4 +31,4 @@ app/
 ```
 
 ## Diagrama UML
-![Diagrama UML do Projeto](/workspaces/ES0008---TEMA-6-GERENCIADOR-DE-CURSOS-E-ALUNOS/docs/uml_semana1.png)
+![Diagrama UML do Projeto](docs/uml_semana1.png)
