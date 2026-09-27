@@ -29,3 +29,6 @@ app/
 └── settings.json          # Ficheiro de configurações (nota_minima_aprovacao, data_limite_trancamento, etc.)
 
 ```
+
+## Diagrama UML
+![Diagrama UML do Projeto](docs/uml_semana1.png)
