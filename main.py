@@ -1,20 +1,8 @@
-class Curso:
-    def __init__(self, codigo, nome, ch, pr, ementa):
-        self.codigo = codigo
-        self.nome = nome
-        self.ch = ch
-        self.pr = pr
-        self.ementa = ementa
+# Importação das classes
+from models.pessoas import Pessoa, Aluno
+from models.academicos import Oferta, Turma, Curso
+from models.registros import Matricula
 
-c1 = Curso("Engenharia de Software", UFCA001, )
-
-
-pass
-
-class Pessoa:
-    def __init__(self, aluno):
-        self.aluno = aluno
-        pass
-
-
-class Oferta: 
+if __name__ == "__main__":
+    # Ponto de entrada da aplicação CLI
+    print("Gestor de Cursos e Alunos - CLI iniciada.")
