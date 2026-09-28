@@ -30,5 +30,5 @@ app/
 
 ```
 
-## Diagrama UML
+### Diagrama UML
 ![Diagrama UML do Projeto](docs/uml_semana1.png)
