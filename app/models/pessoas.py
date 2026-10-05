@@ -24,7 +24,7 @@ class Aluno(Pessoa):
         pass
 
     def __lt__(self, outro):
-        # Ordenação exigida na Semana 2: Compara primeiro o CR. 
+        # Compara primeiro o CR. 
         # Se houver empate, usa a ordem alfabética do nome.
         if self.cr == outro.cr:
             return self.nome < outro.nome
