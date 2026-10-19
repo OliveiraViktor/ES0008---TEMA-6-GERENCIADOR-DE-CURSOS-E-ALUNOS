@@ -1,22 +1,20 @@
+from app.models.registros import Matricula
+
 class RegrasNegocioException(Exception):
-    """Exceção para violações de regras acadêmicas."""
     pass
 
 def realizar_matricula(aluno, turma, turmas_do_aluno):
-    """
-    Efetiva a matrícula de um aluno em uma turma validando:
-    1. Se a turma está aberta e tem vagas.
-    2. Se há choque de horário com outras turmas do aluno no mesmo semestre.
-    """
     if len(turma) >= turma.vagas:
-        raise RegrasNegocioException(f"Turma {turma.id_turma} lotada ({len(turma)}/{turma.vagas}).")
+        raise RegrasNegocioException(f"Turma {turma.id_turma} lotada.")
 
     for t_atual in turmas_do_aluno:
         if turma.periodo_semestre == t_atual.periodo_semestre:
             if turma.tem_conflito_horario(t_atual):
-                raise RegrasNegocioException(f"Choque de horário com a turma {t_atual.id_turma}.")
+                raise RegrasNegocioException("Choque de horário detectado.")
 
-    from app.models.registros import Matricula
-    matricula = Matricula(aluno_matricula=aluno._matricula, id_turma=turma.id_turma)
+    # Cria a matrícula ligando Aluno ↔ Turma[cite: 3, 5]
+    matricula = Matricula(aluno_matricula=aluno.matricula, id_turma=turma.id_turma)
     turma.adicionar_matricula(matricula)
+    aluno.adicionar_matricula_ativa(matricula)
+    
     return matricula
