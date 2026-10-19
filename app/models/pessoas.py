@@ -1,16 +1,19 @@
 class Pessoa:
-    """Classe base para entidades do tipo pessoa."""
     def __init__(self, nome, email):
         self._nome = nome
         self._email = email
 
 class Aluno(Pessoa):
-    """Representa um aluno, herda de Pessoa e permite ordenação por CR."""
     def __init__(self, nome, email, matricula, cr_atual=0.0):
         super().__init__(nome, email)
         self._matricula = matricula
-        self._historico = []
+        self._historico = []  # Disciplinas cursadas
+        self._matriculas_ativas = [] # Lista de matrículas ativas
         self._cr = cr_atual
+
+    @property
+    def matricula(self):
+        return self._matricula
 
     @property
     def cr(self):
@@ -20,12 +23,23 @@ class Aluno(Pessoa):
     def nome(self):
         return self._nome
 
-    def calcular_cr(self):
-        pass
+    @property
+    def matriculas_ativas(self):
+        return self._matriculas_ativas
+
+    def adicionar_matricula_ativa(self, matricula):
+        self._matriculas_ativas.append(matricula)
+
+    def to_dict(self):
+        return {
+            "nome": self._nome,
+            "email": self._email,
+            "matricula": self._matricula,
+            "cr": self._cr,
+            "historico": self._historico
+        }
 
     def __lt__(self, outro):
-        # Compara primeiro o CR. 
-        # Se houver empate, usa a ordem alfabética do nome.
         if self.cr == outro.cr:
             return self.nome < outro.nome
         return self.cr < outro.cr
