@@ -9,7 +9,7 @@ from app.services.dados import salvar_dados, carregar_dados
 
 
 # ==========================================
-# 1. TESTES DE CRIAÇÃO E MÉTODOS ESPECIAIS (SEMANAS 1 E 2)
+# 1. TESTES DE CRIAÇÃO E MÉTODOS ESPECIAIS
 # ==========================================
 
 def test_01_criacao_curso_e_str():
@@ -80,7 +80,7 @@ def test_07_eq_matricula():
 
 
 # ==========================================
-# 2. TESTES DE REGRAS DE NEGÓCIO E RELACIONAMENTOS (SEMANA 3)
+# 2. TESTES DE REGRAS DE NEGÓCIO E RELACIONAMENTOS
 # ==========================================
 
 def test_08_matricula_sucesso():
@@ -134,9 +134,9 @@ def test_11_semestres_diferentes_permite_mesmo_horario():
     assert len(turma_sem2) == 1
 
 
-# ==========================================
-# 3. TESTES DE PERSISTÊNCIA EM JSON (SEMANA 3)
-# ==========================================
+# ==================================
+# 3. TESTES DE PERSISTÊNCIA EM JSON 
+# ==================================
 
 def test_12_persistencia_salvar_e_carregar_json(tmp_path):
     """Testa a gravação e leitura dos dados em arquivo JSON[cite: 4]."""
@@ -185,3 +185,4 @@ def test_15_to_dict_aluno():
     d = aluno.to_dict()
     assert d["matricula"] == "M016"
     assert d["cr"] == 7.8
+
