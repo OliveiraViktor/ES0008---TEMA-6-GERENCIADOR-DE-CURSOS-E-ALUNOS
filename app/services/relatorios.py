@@ -11,5 +11,5 @@ def relatorio_alunos_por_turma(turma, alunos_dict):
         for m in turma.matriculas:
             aluno = alunos_dict.get(m.aluno_matricula)
             if aluno:
-                linhas.append(f"  - {aluno.nome} ({aluno._matricula})")
+                linhas.append(f"  - {aluno.nome} ({aluno.matricula})")
     return "\n".join(linhas)

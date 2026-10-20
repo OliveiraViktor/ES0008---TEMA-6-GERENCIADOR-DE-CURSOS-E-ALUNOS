@@ -12,9 +12,9 @@ def realizar_matricula(aluno, turma, turmas_do_aluno):
             if turma.tem_conflito_horario(t_atual):
                 raise RegrasNegocioException("Choque de horário detectado.")
 
-    # Cria a matrícula ligando Aluno ↔ Turma[cite: 3, 5]
+    # Cria a matrícula ligando Aluno ↔ Turma
     matricula = Matricula(aluno_matricula=aluno.matricula, id_turma=turma.id_turma)
-    turma.adicionar_matricula(matricula)
-    aluno.adicionar_matricula_ativa(matricula)
+    turma.adicionar_matricula(matricula) #a turma agora tem a matricula do aluno
+    aluno.adicionar_matricula_ativa(matricula) #o aluno agora tem essa matricula ativa
     
     return matricula
