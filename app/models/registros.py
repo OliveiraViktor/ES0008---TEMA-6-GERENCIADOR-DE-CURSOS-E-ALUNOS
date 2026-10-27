@@ -48,5 +48,15 @@ class Matricula:
             "estado": self._estado
         }
 
+    @classmethod
+    def from_dict(cls, data: dict) -> "Matricula":
+        return cls(
+            aluno_matricula=data["aluno_matricula"],
+            id_turma=data["id_turma"],
+            nota=data.get("nota", 0.0),
+            frequencia=data.get("frequencia", 0.0),
+            estado=data.get("estado", "Ativa")
+        )
+
     def __eq__(self, outra):
         return isinstance(outra, Matricula) and self._aluno_matricula == outra.aluno_matricula and self._id_turma == outra.id_turma
