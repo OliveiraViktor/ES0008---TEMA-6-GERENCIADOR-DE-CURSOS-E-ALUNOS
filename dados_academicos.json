@@ -6,6 +6,13 @@
             "email": "shsksj",
             "cr": 0.0,
             "historico": []
+        },
+        {
+            "matricula": "12",
+            "nome": "3",
+            "email": "4",
+            "cr": 5.0,
+            "historico": []
         }
     ],
     "cursos": [],
