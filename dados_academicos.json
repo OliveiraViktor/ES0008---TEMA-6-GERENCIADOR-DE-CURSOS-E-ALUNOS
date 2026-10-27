@@ -1,0 +1,13 @@
+{
+    "alunos": [
+        {
+            "matricula": "11",
+            "nome": "ana ",
+            "email": "shsksj",
+            "cr": 0.0,
+            "historico": []
+        }
+    ],
+    "cursos": [],
+    "turmas": []
+}
