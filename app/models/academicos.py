@@ -36,6 +36,16 @@ class Curso:
             "ementa": self._ementa
         }
 
+    @classmethod
+    def from_dict(cls, data: dict) -> "Curso":
+        return cls(
+            codigo=data["codigo"],
+            nome=data["nome"],
+            carga_horaria=data["carga_horaria"],
+            pre_requisitos=data.get("pre_requisitos", []),
+            ementa=data.get("ementa", "")
+        )
+
     def __str__(self):
         return f"Curso: {self._nome} (Código: {self._codigo}) - {self._carga_horaria}h"
 
@@ -98,6 +108,8 @@ class Turma(Oferta):
         self._estado_aberta = False
 
     def adicionar_matricula(self, matricula):
+        if len(self._matriculas) >= self.vagas:
+            raise ValueError("A capacidade máxima de vagas da turma foi atingida.")
         self._matriculas.append(matricula)
 
     def tem_conflito_horario(self, outra_turma):
@@ -111,12 +123,25 @@ class Turma(Oferta):
     def to_dict(self):
         return {
             "periodo_semestre": self._periodo_semestre,
-            "vagas": self._vagas,
+            "vagas": self.vagas,
             "id_turma": self._id_turma,
             "codigo_curso": self._codigo_curso,
             "local": self._local,
-            "dias_horarios": self._dias_horarios
+            "dias_horarios": self._dias_horarios,
+            "matriculas": [m.to_dict() for m in self._matriculas]
         }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Turma":
+        turma = cls(
+            periodo_semestre=data["periodo_semestre"],
+            vagas=data["vagas"],
+            id_turma=data["id_turma"],
+            codigo_curso=data["codigo_curso"],
+            local=data["local"],
+            dias_horarios=data.get("dias_horarios", {})
+        )
+        return turma
 
     def __len__(self):
         return len(self._matriculas)
