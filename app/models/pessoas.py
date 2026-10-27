@@ -13,12 +13,12 @@ class Pessoa:
 
 
 class Aluno(Pessoa):
-    def __init__(self, matricula: str, nome: str, email: str, cr_atual: float = 0.0):
-        super().__init__(nome, email)
+    def __init__(self, nome: str, email: str, matricula: str, cr_atual: float = 0.0, historico: list = None):
+        self._nome = nome
+        self._email = email
         self._matricula = matricula
-        self._historico = []  # Disciplinas cursadas
-        self._matriculas_ativas = []  # Lista de matrículas ativas
         self._cr = cr_atual
+        self._historico = historico if historico is not None else []
 
     @property
     def matricula(self) -> str:

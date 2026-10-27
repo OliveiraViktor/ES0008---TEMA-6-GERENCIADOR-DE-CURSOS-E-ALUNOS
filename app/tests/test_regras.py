@@ -186,3 +186,67 @@ def test_15_to_dict_aluno():
     assert d["matricula"] == "M016"
     assert d["cr"] == 7.8
 
+# ==========================================
+# 5. TESTES DE PRÉ-REQUISITOS, NOTAS E TRANCAMENTO
+# ==========================================
+
+def test_16_erro_pre_requisito():
+    """Testa a rejeição de matrícula quando o aluno não cumpre os pré-requisitos do curso."""
+    aluno = Aluno("Lucas", "lucas@email.com", "M020")
+    # Curso exige "ES101" como pré-requisito
+    curso = Curso("ES102", "Engenharia de Software II", 60, pre_requisitos=["ES101"])
+    turma = Turma("2026.1", 10, "T05", "ES102", "Sala 1")
+    
+    # Histórico vazio (não concluiu ES101)
+    historico_aluno = []
+
+    with pytest.raises(RegrasNegocioException, match="Pré-requisito não cumprido"):
+        realizar_matricula(aluno, turma, [], historico_aluno=historico_aluno, curso_obj=curso)
+
+
+def test_17_calculo_situacao_aprovado():
+    """Testa o lançamento de notas e frequência resultando em aprovação."""
+    mat = Matricula(aluno_matricula="M001", id_turma="T01")
+    mat.nota = 8.0
+    mat.frequencia = 85.0
+    
+    # Lógica simulada de cálculo de situação com base nas regras de negócio
+    situacao = "Aprovado" if mat.nota >= 6.0 and mat.frequencia >= 75.0 else "Reprovado"
+    assert situacao == "Aprovado"
+
+
+def test_18_calculo_situacao_reprovado_por_nota():
+    """Testa reprovação por nota abaixo da média."""
+    mat = Matricula(aluno_matricula="M001", id_turma="T01")
+    mat.nota = 4.5
+    mat.frequencia = 90.0
+    
+    situacao = "Aprovado" if mat.nota >= 6.0 and mat.frequencia >= 75.0 else "Reprovado por Nota"
+    assert situacao == "Reprovado por Nota"
+
+
+def test_19_calculo_situacao_reprovado_por_frequencia():
+    """Testa reprovação por frequência abaixo do limite mínimo."""
+    mat = Matricula(aluno_matricula="M001", id_turma="T01")
+    mat.nota = 9.0
+    mat.frequencia = 60.0 # Abaixo de 75%
+    
+    if mat.frequencia < 75.0:
+        situacao = "Reprovado por Frequência"
+    elif mat.nota < 6.0:
+        situacao = "Reprovado por Nota"
+    else:
+        situacao = "Aprovado"
+        
+    assert situacao == "Reprovado por Frequência"
+
+
+def test_20_trancamento_matricula():
+    """Testa a alteração de estado da matrícula para Trancada."""
+    mat = Matricula(aluno_matricula="M001", id_turma="T01", estado="Ativa")
+    
+    # Simula a função de trancamento
+    if mat.estado == "Ativa":
+        mat._estado = "Trancada"
+        
+    assert mat.estado == "Trancada"

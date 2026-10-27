@@ -14,42 +14,41 @@ def carregar_configuracoes(caminho="settings.json"):
             pass
     return {"nota_minima_aprovacao": 6.0, "frequencia_minima_aprovacao": 75.0}
 
-def realizar_matricula(aluno, turma, curso_da_turma, turmas_do_aluno, historico_aluno):
+def realizar_matricula(aluno, turma, turmas_do_aluno=None, historico_aluno=None, curso_obj=None):
     """
-    Efetua a matrícula verificando:
-    1. Lotação de vagas
-    2. Pré-requisitos cumpridos do curso
-    3. Conflito de horários no mesmo semestre
+    Efetua a matrícula validando vagas, choque de horário e pré-requisitos de forma segura.
     """
-    # 1. Checagem de Vagas
+    if turmas_do_aluno is None:
+        turmas_do_aluno = []
+    if historico_aluno is None:
+        historico_aluno = []
+
+    # 1. Validação de Vagas
     if len(turma) >= turma.vagas:
         raise RegrasNegocioException(f"Turma {turma.id_turma} lotada.")
 
-    # 2. Checagem de Pré-requisitos
-    # historico_aluno deve ser uma lista de códigos de cursos/disciplinas em que o aluno foi aprovado
-    for pre in curso_da_turma.pre_requisitos:
-        if pre not in historico_aluno:
-            raise RegrasNegocioException(f"Pré-requisito não cumprido: {pre}.")
+    # 2. Validação de Pré-requisitos (se aplicável)
+    if curso_obj and hasattr(curso_obj, 'pre_requisitos'):
+        for pre in curso_obj.pre_requisitos:
+            if pre not in historico_aluno:
+                raise RegrasNegocioException(f"Pré-requisito não cumprido: {pre}.")
 
-    # 3. Checagem de Choque de Horário
+    # 3. Validação de Choque de Horário
     for t_atual in turmas_do_aluno:
-        if turma.periodo_semestre == t_atual.periodo_semestre:
-            if turma.tem_conflito_horario(t_atual):
+        if getattr(turma, 'periodo_semestre', None) == getattr(t_atual, 'periodo_semestre', None):
+            if hasattr(turma, 'tem_conflito_horario') and turma.tem_conflito_horario(t_atual):
                 raise RegrasNegocioException("Choque de horário detectado.")
 
     matricula = Matricula(aluno_matricula=aluno.matricula, id_turma=turma.id_turma)
     turma.adicionar_matricula(matricula)
-    aluno.adicionar_matricula_ativa(matricula)
     return matricula
 
 def trancar_matricula(matricula):
-    """Realiza o trancamento de uma matrícula ativa."""
-    if matricula.estado != "Ativa":
+    if getattr(matricula, 'estado', 'Ativa') != "Ativa":
         raise RegrasNegocioException("Apenas matrículas ativas podem ser trancadas.")
     matricula._estado = "Trancada"
 
 def lancar_notas_frequencia(matricula, nota, frequencia):
-    """Lança nota e frequência e calcula automaticamente a situação final."""
     matricula.nota = nota
     matricula.frequencia = frequencia
     
