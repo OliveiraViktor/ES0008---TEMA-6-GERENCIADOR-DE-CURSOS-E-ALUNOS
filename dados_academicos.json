@@ -15,6 +15,14 @@
             "historico": []
         }
     ],
-    "cursos": [],
+    "cursos": [
+        {
+            "codigo": "ES01",
+            "nome": "Engenharia de Software ",
+            "carga_horaria": 3200,
+            "pre_requisitos": [],
+            "ementa": ""
+        }
+    ],
     "turmas": []
 }
