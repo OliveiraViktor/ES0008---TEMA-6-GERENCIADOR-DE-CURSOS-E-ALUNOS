@@ -1,12 +1,19 @@
 # ES0008 | TEMA 6: GERENCIADOR DE CURSOS E ALUNOS
 
-### Este projeto foi criado a fim de desenvolver um sistema de linha de comandos (CLI) para gerir cursos, turmas, alunos e matrículas. O objetivo é aplicar conceitos de Programação Orientada a Objetos, como encapsulamento, herança, métodos especiais e validações rigorosas.
+### Projeto desenvolvido no âmbito da disciplina, focado nos princípios de **Programação Orientada a Objetos (POO)**. O sistema engloba a gestão de alunos, cursos, turmas e matrículas, aplicando validações rigorosas de regras de negócio, persistência de dados em JSON e interface interativa por linha de comando (CLI).
 
+---
 
+## 🚀 Tecnologias Utilizadas
+- **Python 3.14+**
+
+- **Pytest** (para testes automatizados)
+
+- **JSON** (para persistência local de dados)
+
+## 📂 Estrutura do Projeto
 ```
 app/
-├── main.py                # Ponto de entrada da CLI 
-│
 ├── models/
 │   ├── pessoas.py         # Classes: Pessoa, Aluno
 │   ├── academicos.py      # Classes: Curso, Oferta, Turma
@@ -18,23 +25,45 @@ app/
 │   └── dados.py           # Módulo de persistência para salvar/carregar dados
 │
 ├── cli/                   # Agrupa os subcomandos do terminal
-│   ├── cursos_cmd.py      # Subcomandos (ex: acad cadastrar-curso)
-│   ├── turmas_cmd.py      # Subcomandos (ex: acad abrir-turma)
-│   ├── matriculas_cmd.py  # Subcomandos (ex: acad matricular, acad lancar-nota)
-│   └── relatorios_cmd.py  # Subcomandos (ex: acad relatorio taxa-aprovacao)
+│   └── main.py            # Menu interativo de linha de comando (CLI)
 │
 ├── tests/
 │   └── test_regras.py     # Testes exigidos com pytest cobrindo os fluxos principais e erros
 │
 └── settings.json          # Ficheiro de configurações (nota_minima_aprovacao, data_limite_trancamento, etc.)
+```
 
-## Executando os Testes
-Para rodar a suíte de testes automatizados com o pytest, certifique-se de estar na raiz do projeto e execute:
+## ⚙️ Como Executar a Aplicação (CLI)
+
+Para iniciar o sistema de menus interativo, certifique-se de que se encontra na **pasta raiz** do repositório e execute o comando:
+
+```bash
+python3 -m app.cli.main
+```
+
+Através do menu, poderá:
+
+    Registrar novos Alunos.
+
+    Registrar Cursos no catálogo.
+
+    Criar Turmas associadas a um curso, definir vagas, horários e locais.
+
+    Efetuar Matrículas (com validação automática de capacidade máxima e conflitos de horário).
+
+    Visualizar relatórios detalhados de turmas, vagas e alunos inscritos.
+
+Nota: Todas as alterações são guardadas automaticamente no ficheiro dados_academicos.json na raiz do projeto.
+
+
+## 🧪 Como Executar os Testes Automatizados
+
+A suíte de testes valida todas as regras de negócio e modelos implementados. Para executá-la na máquina do avaliador ou no seu ambiente, basta abrir o terminal na pasta raiz e digitar:
+
 ```bash
 pytest
 
 ```
-
 
 ### Diagrama UML
 ![Diagrama UML do Projeto](docs/uml_semana1.png)
