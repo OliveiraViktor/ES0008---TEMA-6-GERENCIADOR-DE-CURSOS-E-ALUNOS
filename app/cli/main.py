@@ -5,6 +5,13 @@ from app.models.registros import Matricula
 from app.services.regras_negocio import realizar_matricula, RegrasNegocioException
 from app.services.dados import salvar_dados, carregar_dados
 
+
+dados_iniciais = carregar_dados()
+cursos = [Curso.from_dict(c) for c in dados_iniciais.get("cursos", [])]
+alunos = [Aluno.from_dict(a) for a in dados_iniciais.get("alunos", [])]
+turmas = [Turma.from_dict(t) for t in dados_iniciais.get("turmas", [])]
+matriculas = [Matricula.from_dict(m) for m in dados_iniciais.get("matriculas", [])]  
+
 def exibir_menu():
     print("\n========================================")
     print("    SISTEMA DE GESTÃO ACADÉMICA (CLI)   ")
@@ -43,7 +50,7 @@ def main():
             "cursos": [c.to_dict() for c in cursos],
             "turmas": [t.to_dict() for t in turmas]
         }
-        salvar_dados(dados_dict)
+        salvar_dados(cursos, alunos, turmas, matriculas)
 
     while True:
         exibir_menu()

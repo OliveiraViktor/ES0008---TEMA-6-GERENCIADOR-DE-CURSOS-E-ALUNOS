@@ -1,4 +1,13 @@
 {
+    "cursos": [
+        {
+            "codigo": "ES01",
+            "nome": "Engenharia de Software ",
+            "carga_horaria": 3200,
+            "pre_requisitos": [],
+            "ementa": ""
+        }
+    ],
     "alunos": [
         {
             "matricula": "11",
@@ -13,16 +22,35 @@
             "email": "4",
             "cr": 5.0,
             "historico": []
-        }
-    ],
-    "cursos": [
+        },
         {
-            "codigo": "ES01",
-            "nome": "Engenharia de Software ",
-            "carga_horaria": 3200,
-            "pre_requisitos": [],
-            "ementa": ""
+            "matricula": "2026001",
+            "nome": "Ana Silva",
+            "email": "as@",
+            "cr": 0.0,
+            "historico": []
         }
     ],
-    "turmas": []
+    "turmas": [
+        {
+            "periodo_semestre": "2026.1",
+            "vagas": 1,
+            "id_turma": "EST1",
+            "codigo_curso": "ES01",
+            "local": "A-2",
+            "dias_horarios": {
+                "SEG": "18:00"
+            },
+            "matriculas": [
+                {
+                    "aluno_matricula": "2026001",
+                    "id_turma": "EST1",
+                    "nota": 0.0,
+                    "frequencia": 0.0,
+                    "estado": "Ativa"
+                }
+            ]
+        }
+    ],
+    "matriculas": []
 }
