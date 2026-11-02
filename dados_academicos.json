@@ -47,10 +47,18 @@
                     "id_turma": "EST1",
                     "nota": 0.0,
                     "frequencia": 0.0,
-                    "estado": "Ativa"
+                    "estado": "Trancada"
                 }
             ]
         }
     ],
-    "matriculas": []
+    "matriculas": [
+        {
+            "aluno_matricula": "2026001",
+            "id_turma": "EST1",
+            "nota": 0.0,
+            "frequencia": 0.0,
+            "estado": "Trancada"
+        }
+    ]
 }
