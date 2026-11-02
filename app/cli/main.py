@@ -6,12 +6,6 @@ from app.services.regras_negocio import realizar_matricula, trancar_matricula, l
 from app.services.relatorios import calcular_taxa_aprovacao, distribuicao_notas, top_n_alunos
 from app.services.dados import salvar_dados, carregar_dados
 
-dados_iniciais = carregar_dados()
-cursos = [Curso.from_dict(c) for c in dados_iniciais.get("cursos", [])]
-alunos = [Aluno.from_dict(a) for a in dados_iniciais.get("alunos", [])]
-turmas = [Turma.from_dict(t) for t in dados_iniciais.get("turmas", [])]
-matriculas = [Matricula.from_dict(m) for m in dados_iniciais.get("matriculas", [])]  
-
 def exibir_menu():
     print("\n========================================")
     print("    SISTEMA DE GESTÃO ACADÉMICA   ")
@@ -71,12 +65,14 @@ def main():
             
             if any(a.matricula == mat for a in alunos):
                 print("❌ Erro: Já existe um aluno com esta matrícula.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             
             novo_aluno = Aluno(matricula=mat, nome=nome, email=email, cr_atual=cr)
             alunos.append(novo_aluno)
             persistir()
             print("✔ Aluno registado e guardado com sucesso!")
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "2":
             print("\n--- Registo de Curso ---")
@@ -87,16 +83,19 @@ def main():
             
             if any(c.codigo == cod for c in cursos):
                 print("❌ Erro: Já existe um curso com este código.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             
             novo_curso = Curso(codigo=cod, nome=nome, carga_horaria=carga, ementa=ementa)
             cursos.append(novo_curso)
             persistir()
             print("✔ Curso registado e guardado com sucesso!")
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "3":
             if not cursos:
                 print("⚠ Erro: Deve registar pelo menos um curso antes de criar turmas.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             print("\n--- Criação de Turma ---")
             id_t = input("ID da Turma (ex: TURMA01): ")
@@ -131,10 +130,12 @@ def main():
             turmas.append(nova_turma)
             persistir()
             print("✔ Turma criada e guardada com sucesso!")
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "4":
             if not alunos or not turmas:
                 print("⚠ Erro: É necessário ter alunos e turmas registados para efetuar matrículas.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             print("\n--- Efetuar Matrícula ---")
             print("Alunos:")
@@ -178,6 +179,7 @@ def main():
                 print(f"❌ Erro de Negócio: {e}")
             except ValueError as e:
                 print(f"❌ Erro: {e}")
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "5":
             print("\n--- Relatório de Turmas e Vagas ---")
@@ -194,6 +196,7 @@ def main():
                     aluno_nome = next((a.nome for a in alunos if a.matricula == m.aluno_matricula), m.aluno_matricula)
                     print(f"   • Aluno: {aluno_nome} (Mat: {m.aluno_matricula}) | Nota: {m.nota} | Frequência: {m.frequencia}% | Estado: {m.estado}")
                 print("-" * 50)
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "6":
             print("\n--- Lançar Notas e Frequência ---")
@@ -202,9 +205,11 @@ def main():
             
             if not turma_obj:
                 print("❌ Erro: Não há nenhuma turma cadastrada sob este código.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             if not turma_obj.matriculas:
                 print("❌ Esta turma existe, mas ainda não possui alunos matriculados.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             
             print("Matrículas nesta turma:")
@@ -224,6 +229,7 @@ def main():
                 print(f"✔ Notas lançadas! Nova situação do aluno: {mat_escolhida.estado}")
             except ValueError as e:
                 print(f"❌ Erro de valor: {e}")
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "7":
             print("\n--- Trancar Matrícula ---")
@@ -232,15 +238,18 @@ def main():
             
             if not turma_obj:
                 print("❌ Erro: Não há nenhuma turma cadastrada sob este código.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             if not turma_obj.matriculas:
                 print("❌ Esta turma existe, mas ainda não possui matrículas registradas.")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             
             print("Matrículas ativas nesta turma:")
             ativas = [m for m in turma_obj.matriculas if m.estado == "Ativa"]
             if not ativas:
                 print("  (Nenhuma matrícula ativa nesta turma)")
+                input("\nPressione Enter para retornar ao menu principal...")
                 continue
             for i, m in enumerate(ativas):
                 a_nome = next((a.nome for a in alunos if a.matricula == m.aluno_matricula), m.aluno_matricula)
@@ -255,6 +264,7 @@ def main():
                 print("✔ Matrícula trancada com sucesso!")
             except RegrasNegocioException as e:
                 print(f"❌ Erro de Negócio: {e}")
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "8":
             print("\n========================================")
@@ -290,12 +300,14 @@ def main():
                 for idx, a in enumerate(melhores, 1):
                     print(f"   {idx}. {a.nome} - CR: {getattr(a, 'cr_atual', 0.0)}")
                 print()
+            input("\nPressione Enter para retornar ao menu principal...")
 
         elif opcao == "0":
             print("A encerrar o sistema. Até breve!")
             break
         else:
             print("⚠ Opção inválida. Por favor, escolha uma opção válida do menu.")
+            input("\nPressione Enter para retornar ao menu principal...")
 
 if __name__ == "__main__":
     main()
