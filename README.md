@@ -82,10 +82,10 @@ Cadastra as matrizes curriculares/disciplinas disponíveis na instituição.
 
 * **Entrada no CLI:** Opção `2`
 * **Exemplo de dados:**
-* Código do curso: `ES0008`
-* Nome: `Programação Orientada a Objetos`
+* Código do curso: `ES2026`
+* Nome: `Engenharia de Software`
 * Carga horária: `60`
-* Ementa: `Conceitos avançados de POO em Python.`
+* Ementa: `Ementa`
 
 
 
@@ -96,7 +96,7 @@ Abre uma turma associada a um curso cadastrado, definindo capacidade e horários
 * **Entrada no CLI:** Opção `3`
 * **Exemplo de dados:**
 * ID da Turma: `POO-2026.1`
-* Seleção do Curso: `ES0008`
+* Seleção do Curso: `ES2026`
 * Período/Semestre: `2026.1`
 * Capacidade de vagas: `30`
 * Local/Sala: `Bloco A - Sala 12`
