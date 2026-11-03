@@ -160,4 +160,4 @@ pytest
 ```
 
 ### Diagrama UML
-![Diagrama UML do Projeto](docs/uml_semana1.png)
+![Diagrama UML do Projeto](docs/FinalDiagram.drawio.png)
